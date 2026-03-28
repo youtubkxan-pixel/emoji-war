@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⚔️ BATTLE ROYALE — LIVE EMOJI WAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap');
+/* Font fallback stack */
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;height:100%;overflow:hidden;
+  background:#06001A;color:#fff;
+  font-family:'Rajdhani','Arial',sans-serif;
+  user-select:none;-webkit-user-select:none;
+  touch-action:manipulation;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+#root{
+  position:relative;width:100%;height:100dvh;
+  display:flex;flex-direction:column;overflow:hidden;
+  background:
+    radial-gradient(ellipse 140% 90% at 30% 10%,rgba(100,0,220,.22) 0%,transparent 50%),
+    radial-gradient(ellipse 120% 80% at 70% 80%,rgba(0,160,255,.16) 0%,transparent 50%),
+    radial-gradient(ellipse 60% 60% at 50% 50%,rgba(220,0,140,.07) 0%,transparent 60%),
+    #06001A;
+}
+#top{display:flex;align-items:flex-start;gap:7px;padding:5px 7px 3px;flex-shrink:0;height:90px;position:relative;z-index:10;}
+#cam{position:relative;width:47%;height:100%;border-radius:8px;overflow:hidden;border:1.5px solid rgba(180,80,255,.25);background:rgba(7,2,20,.9);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+#ad-slot{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.12);font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:2px;text-align:center;}
+#ad-slot::before{content:'📹';display:block;font-size:1.8rem;margin-bottom:4px;opacity:.15}
+.live-badge{position:absolute;top:6px;left:6px;background:#E50000;color:#fff;font-family:'Orbitron',monospace;font-size:.44rem;font-weight:700;letter-spacing:1px;padding:2px 7px;border-radius:3px;display:flex;align-items:center;gap:3px;animation:liveBlink 1.4s ease-in-out infinite;z-index:2;}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#fff;flex-shrink:0;animation:liveBlink .7s ease-in-out infinite alternate;}
+@keyframes liveBlink{0%,100%{opacity:1}50%{opacity:.45}}
+.cam-label{position:absolute;bottom:5px;left:7px;font-family:'Orbitron',monospace;font-size:.46rem;letter-spacing:1px;color:rgba(255,255,255,.4);}
+#winners{flex:1;height:100%;border-radius:8px;background:rgba(8,0,28,.88);border:1px solid rgba(180,80,255,.2);padding:7px 8px;display:flex;flex-direction:column;gap:3px;overflow:hidden;}
+.win-ttl{font-family:'Orbitron',monospace;font-size:.56rem;letter-spacing:2px;color:#C080FF;text-align:center;border-bottom:1px solid rgba(180,80,255,.15);padding-bottom:4px;margin-bottom:2px;}
+.win-row{display:flex;align-items:center;gap:5px;padding:1px 0}
+.win-rk{font-family:'Orbitron',monospace;font-size:.54rem;color:rgba(255,255,255,.35);width:12px}
+.win-em{font-size:1.05rem;line-height:1}
+.win-nm{flex:1;font-weight:700;font-size:.62rem;color:#E0C0FF;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.win-ct{font-family:'Orbitron',monospace;font-size:.54rem;color:#FFD700;white-space:nowrap}
+#leader{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:3px 10px;background:rgba(0,0,0,.4);border-top:1px solid rgba(180,80,255,.1);border-bottom:1px solid rgba(180,80,255,.1);position:relative;z-index:10;}
+.ldot{width:7px;height:7px;border-radius:50%;background:#00FF88;box-shadow:0 0 6px #00FF88;animation:ldotA .8s ease-in-out infinite alternate;flex-shrink:0;}
+@keyframes ldotA{from{opacity:.3}to{opacity:1}}
+#l-em{font-size:1.05rem;flex-shrink:0}
+#l-nm{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:1px;color:#FFD700;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px;}
+#l-vt{margin-left:auto;font-family:'Orbitron',monospace;font-size:.54rem;color:rgba(255,255,255,.4);flex-shrink:0;}
+.yt-st{font-family:'Orbitron',monospace;font-size:.46rem;letter-spacing:1px;padding:2px 7px;border-radius:3px;transition:all .3s;flex-shrink:0;}
+.yt-st.on{color:#00FF88;border:1px solid rgba(0,255,136,.3);background:rgba(0,255,136,.07)}
+.yt-st.off{color:#FF2D78;border:1px solid rgba(255,45,120,.3);background:rgba(255,45,120,.07)}
+.yt-st.wait{color:#FFD700;border:1px solid rgba(255,215,0,.3);background:rgba(255,215,0,.07);animation:liveBlink .8s ease-in-out infinite alternate}
+#arena-outer{flex:1 1 0;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:0;position:relative;z-index:1;}
+#arena-wrap{position:relative;flex-shrink:0;}
+#arena-ring{position:absolute;inset:0;border-radius:50%;border:2.5px dashed rgba(180,80,255,.45);animation:ringRot 35s linear infinite;pointer-events:none;z-index:2;box-shadow:0 0 20px rgba(150,60,255,.1),inset 0 0 20px rgba(100,0,255,.06);}
+@keyframes ringRot{to{transform:rotate(360deg)}}
+#arena-ring2{position:absolute;inset:6px;border-radius:50%;border:1px solid rgba(180,80,255,.12);pointer-events:none;z-index:2;}
+#arena-bg{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 44%,rgba(80,0,180,.1) 0%,rgba(40,0,120,.05) 40%,rgba(6,0,26,.98) 68%);pointer-events:none;}
+/* PERF: transform ishlatiladi — GPU accelerated */
+.snode{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;z-index:5;
+  will-change:transform;
+  contain:layout style;
+}
+.s-ball{position:relative;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.18) 0%,rgba(255,255,255,.04) 45%,rgba(0,0,0,.25) 100%);box-shadow:0 3px 10px rgba(0,0,0,.65),inset 0 1px 2px rgba(255,255,255,.18);transition:box-shadow .15s ease;}
+.s-em{font-size:clamp(1.1rem,2.6vw,1.75rem);line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55));}
+.s-vt{font-family:'Orbitron',monospace;font-size:clamp(.3rem,.65vw,.48rem);color:#FFD700;font-weight:700;line-height:1;margin-top:1px;text-shadow:0 1px 3px rgba(0,0,0,.9);}
+.snode.leader .s-ball{box-shadow:0 0 0 2px rgba(255,215,0,.6),0 0 16px rgba(255,215,0,.5),0 3px 10px rgba(0,0,0,.65);}
+.snode.leader .s-vt{color:gold}
+.snode.danger .s-ball{box-shadow:0 0 0 1.5px rgba(255,80,80,.4),0 0 10px rgba(255,40,40,.2),0 3px 10px rgba(0,0,0,.65);animation:dangerFade .5s ease-in-out infinite alternate;}
+@keyframes dangerFade{from{opacity:.6}to{opacity:1}}
+.snode.danger .s-vt{color:#FF6060}
+.snode.hit .s-ball{animation:hitF .12s ease-out}
+@keyframes hitF{0%{box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 24px rgba(255,255,255,.6)}100%{box-shadow:0 3px 10px rgba(0,0,0,.65)}}
+.snode.out{animation:elimA .85s ease-in forwards !important;z-index:4;pointer-events:none;}
+@keyframes elimA{
+  0%{transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:1}
+  12%{transform:translate(-50%,-50%) scale(1.5) rotate(-8deg);opacity:1}
+  100%{transform:translate(-50%,150vh) scale(.01) rotate(32deg);opacity:0}
+}
+.vburst{position:absolute;pointer-events:none;z-index:20;font-family:'Orbitron',monospace;font-size:.68rem;color:#00FF88;text-shadow:0 0 8px #00FF88;animation:vbA .72s ease-out forwards;white-space:nowrap;}
+@keyframes vbA{0%{transform:translate(-50%,-50%) scale(1.5);opacity:1}100%{transform:translate(-50%,-185%) scale(.3);opacity:0}}
+.joinfx{position:fixed;top:44%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:100;font-family:'Orbitron',monospace;font-size:.95rem;color:#FFD700;text-shadow:0 0 22px #FFD700;animation:joinA .9s ease-out forwards;text-align:center;white-space:nowrap;}
+@keyframes joinA{0%{transform:translate(-50%,-50%) scale(.18) rotate(-14deg);opacity:1}55%{transform:translate(-50%,-50%) scale(1.15) rotate(1deg);opacity:1}100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:0}}
+#round-bar{flex-shrink:0;display:flex;align-items:center;gap:4px;padding:3px 8px;background:rgba(0,0,0,.5);border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:10;}
+.rb{font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:1.5px;padding:2px 7px;border-radius:3px;white-space:nowrap;}
+.rb-rnd{color:#FFD700;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.22)}
+.rb-phase{color:#FF00CC;background:rgba(255,0,200,.07);border:1px solid rgba(255,0,200,.25);animation:fG .9s ease-in-out infinite alternate;}
+.rb-phase.brk{color:#00CFFF;background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.2);animation:none;}
+@keyframes fG{from{box-shadow:none}to{box-shadow:0 0 8px rgba(255,0,200,.35)}}
+.rb-timer{color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.rb-alive{color:#00FF88;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.22);margin-left:auto;}
+#elim-sec{flex-shrink:0;padding:4px 8px 5px;background:rgba(0,0,0,.45);border-top:1px solid rgba(255,0,120,.1);position:relative;z-index:10;}
+.elim-ttl{font-family:'Orbitron',monospace;font-size:.46rem;letter-spacing:2px;color:#FF2D78;margin-bottom:3px;display:flex;align-items:center;gap:4px;}
+.e-dot{width:5px;height:5px;border-radius:50%;background:#FF2D78;flex-shrink:0}
+#elim-scroll{display:flex;gap:3px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-ms-overflow-style:none;}
+#elim-scroll::-webkit-scrollbar{display:none}
+.e-item{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.1) 0%,rgba(0,0,0,.4) 100%);border:1px solid rgba(255,45,120,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;opacity:.6;position:relative;}
+.e-item::after{content:'✕';position:absolute;font-size:.38rem;color:rgba(255,45,120,.9);bottom:-1px;right:-1px;background:#06001A;border-radius:50%;width:10px;height:10px;line-height:10px;text-align:center;}
+#wscreen{display:none;position:fixed;inset:0;background:rgba(6,0,26,.96);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:10px;}
+#wscreen.on{display:flex}
+.cf-wrap{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.cfp{position:absolute;top:-20px;animation:cfF linear forwards}
+@keyframes cfF{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:.2}}
+.w-trophy{font-size:3rem;animation:trS 2s ease-in-out infinite}
+@keyframes trS{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.1) rotate(5deg)}}
+.w-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,5vw,2.5rem);letter-spacing:6px;background:linear-gradient(135deg,#C080FF,#FF00CC,#00CFFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.w-em{font-size:clamp(4rem,12vw,6rem);animation:wP 1.5s ease-in-out infinite}
+@keyframes wP{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.w-nm{font-family:'Orbitron',monospace;font-weight:700;font-size:clamp(1.1rem,3.5vw,1.8rem);letter-spacing:4px;color:gold;text-shadow:0 0 30px gold;}
+.w-vt{color:rgba(255,255,255,.4);font-size:.82rem;font-weight:700}
+.w-cta{font-family:'Orbitron',monospace;font-size:.68rem;letter-spacing:2px;color:#C080FF;background:rgba(180,80,255,.08);border:1px solid rgba(180,80,255,.3);padding:6px 16px;border-radius:5px;animation:ctaG 1.5s ease-in-out infinite;text-align:center;}
+@keyframes ctaG{0%,100%{box-shadow:none}50%{box-shadow:0 0 18px rgba(180,80,255,.4)}}
+.w-next{font-family:'Orbitron',monospace;font-size:.7rem;letter-spacing:2px;color:rgba(255,255,255,.22)}
+#toast{position:fixed;top:8px;left:50%;transform:translateX(-50%) translateY(-70px);background:rgba(6,0,26,.97);border:1px solid rgba(180,80,255,.5);border-radius:5px;padding:5px 14px;font-weight:700;font-size:.63rem;color:#C080FF;z-index:500;white-space:nowrap;pointer-events:none;transition:transform .28s cubic-bezier(.34,1.56,.64,1);max-width:90vw;overflow:hidden;text-overflow:ellipsis;}
+#toast.on{transform:translateX(-50%) translateY(0)}
+.ms-banner{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(70px);background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,0,200,.1));border:1px solid rgba(255,215,0,.4);border-radius:6px;padding:6px 18px;font-family:'Orbitron',monospace;font-size:.72rem;letter-spacing:2px;color:#FFD700;z-index:60;white-space:nowrap;transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
+.ms-banner.on{transform:translateX(-50%) translateY(0)}
+/* PERF: particles limit va contain */
+.pt{position:fixed;border-radius:50%;pointer-events:none;z-index:999;animation:ptF .6s ease-out forwards;contain:strict;}
+@keyframes ptF{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+#hflash{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:0;transition:opacity .08s}
+#hflash.on{opacity:1}
+#sound-badge{position:fixed;bottom:12px;right:10px;font-family:'Orbitron',monospace;font-size:.44rem;letter-spacing:1px;padding:4px 10px;border-radius:4px;background:rgba(0,200,120,.08);border:1px solid rgba(0,255,136,.3);color:#00FF88;z-index:600;cursor:pointer;animation:sbP 1.6s ease-in-out infinite alternate;user-select:none;}
+@keyframes sbP{from{opacity:.5}to{opacity:1}}
+#cta-bar{flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 10px;background:linear-gradient(90deg,transparent,rgba(255,215,0,.10) 50%,transparent);border-top:1px solid rgba(255,215,0,.18);border-bottom:1px solid rgba(180,80,255,.18);position:relative;z-index:10;overflow:hidden;}
+#cta-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,215,0,.10) 50%,transparent);animation:ctaSw 3s ease-in-out infinite;}
+@keyframes ctaSw{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.cta-text{font-family:'Orbitron',monospace;font-size:.6rem;font-weight:700;letter-spacing:2px;color:#FFD700;animation:ctaP 2s ease-in-out infinite;white-space:nowrap;}
+@keyframes ctaP{0%,100%{text-shadow:0 0 8px rgba(255,215,0,.4)}50%{text-shadow:0 0 22px rgba(255,215,0,1),0 0 40px rgba(255,180,0,.5)}}
+.cta-icon{font-size:.95rem;animation:ctaR 1.8s ease-in-out infinite alternate;}
+@keyframes ctaR{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+
+/* ── SUBSCRIBE BANNER (top drop-in) ── */
+#sub-banner{
+  position:fixed;top:-90px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#FF0000,#b30000);
+  border:2px solid rgba(255,120,120,.5);border-radius:10px;
+  padding:8px 22px;font-family:'Orbitron',monospace;font-weight:700;
+  letter-spacing:2px;color:#fff;z-index:700;white-space:nowrap;
+  cursor:pointer;user-select:none;
+  box-shadow:0 0 32px rgba(255,0,0,.55),0 6px 24px rgba(0,0,0,.65);
+  transition:top .5s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;gap:10px;
+}
+#sub-banner.on{top:10px}
+#sub-banner .sb-bell{font-size:1.2rem;animation:bellRock .55s ease-in-out infinite alternate;}
+@keyframes bellRock{from{transform:rotate(-20deg)}to{transform:rotate(20deg)}}
+#sub-banner .sb-lines{display:flex;flex-direction:column;gap:2px;}
+#sub-banner .sb-main{font-size:.7rem;letter-spacing:2.5px;}
+#sub-banner .sb-hint{font-size:.44rem;letter-spacing:1px;opacity:.75;font-weight:400;}
+
+/* ── STREAK COUNTER (bottom-left) ── */
+#streak-bar{
+  position:fixed;bottom:50px;left:10px;
+  font-family:'Orbitron',monospace;font-size:.5rem;letter-spacing:1px;
+  padding:4px 11px;border-radius:5px;
+  background:rgba(255,107,0,.08);border:1px solid rgba(255,107,0,.4);
+  color:#FF6B00;z-index:600;white-space:nowrap;
+  transform:translateX(-130px);transition:transform .45s cubic-bezier(.34,1.56,.64,1);
+}
+#streak-bar.on{transform:translateX(0)}
+
+/* ── CHAT REMINDER (bottom center) ── */
+#chat-reminder{
+  position:fixed;bottom:92px;left:50%;
+  transform:translateX(-50%) translateY(60px);opacity:0;
+  font-family:'Orbitron',monospace;font-size:.62rem;letter-spacing:2px;
+  padding:6px 18px;border-radius:6px;
+  background:rgba(0,207,255,.07);border:1px solid rgba(0,207,255,.38);
+  color:#00CFFF;z-index:600;white-space:nowrap;pointer-events:none;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1),opacity .45s;
+}
+#chat-reminder.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── WIN SCREEN: subscribe button ── */
+.w-sub-btn{
+  display:flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,#FF0000,#b30000);
+  border:none;border-radius:8px;padding:11px 30px;
+  cursor:pointer;font-family:'Orbitron',monospace;
+  font-size:.76rem;font-weight:700;letter-spacing:3px;color:#fff;
+  box-shadow:0 0 30px rgba(255,0,0,.6),0 4px 18px rgba(0,0,0,.55);
+  animation:subPulse 1.5s ease-in-out infinite;margin-top:2px;
+  user-select:none;
+}
+@keyframes subPulse{
+  0%,100%{box-shadow:0 0 22px rgba(255,0,0,.45),0 4px 18px rgba(0,0,0,.55)}
+  50%{box-shadow:0 0 44px rgba(255,0,0,.85),0 4px 28px rgba(0,0,0,.6)}
+}
+.w-sub-btn:active{transform:scale(.95)}
+.w-sub-btn .sub-icon{font-size:1.15rem}
+
+/* ── WIN SCREEN: rounds-watched badge ── */
+.w-rounds-badge{
+  font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:2px;
+  color:rgba(255,255,255,.32);margin-top:-4px;
+}
+
+/* ── AUDIENCE SIGNALS CSS ── */
+
+/* First Blood overlay */
+#first-blood{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:800;
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:clamp(1.4rem,4vw,2.2rem);letter-spacing:4px;
+  color:#FF2D78;text-shadow:0 0 40px #FF2D78,0 0 80px rgba(255,45,120,.5);
+  text-align:center;pointer-events:none;
+  animation:fbA .9s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes fbA{
+  0%{transform:translate(-50%,-50%) scale(.1) rotate(-10deg);opacity:0}
+  60%{transform:translate(-50%,-50%) scale(1.1) rotate(2deg);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:1}
+}
+
+/* Comeback flash */
+#comeback{
+  display:none;position:fixed;bottom:120px;left:50%;
+  transform:translateX(-50%) translateY(80px);opacity:0;
+  font-family:'Orbitron',monospace;font-size:.78rem;
+  font-weight:700;letter-spacing:3px;padding:8px 22px;
+  border-radius:6px;z-index:600;white-space:nowrap;
+  background:linear-gradient(135deg,rgba(255,107,0,.15),rgba(255,45,120,.15));
+  border:1px solid rgba(255,107,0,.6);color:#FF6B00;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .4s;
+}
+#comeback.on{
+  display:block;transform:translateX(-50%) translateY(0);opacity:1;
+}
+
+/* Dead air nudge */
+#dead-air{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:700;
+  font-family:'Orbitron',monospace;font-size:clamp(.8rem,2.5vw,1.2rem);
+  font-weight:700;letter-spacing:3px;padding:16px 30px;border-radius:10px;
+  background:rgba(6,0,26,.97);border:2px solid rgba(255,215,0,.5);
+  color:#FFD700;text-align:center;pointer-events:none;
+  box-shadow:0 0 40px rgba(255,215,0,.2);
+  animation:daP 1.2s ease-in-out infinite alternate;
+}
+@keyframes daP{from{border-color:rgba(255,215,0,.3)}to{border-color:rgba(255,215,0,.8)}}
+
+/* Next round teaser (win screen pastida) */
+#next-teaser{
+  font-family:'Orbitron',monospace;font-size:.62rem;
+  letter-spacing:2px;color:rgba(0,207,255,.7);
+  text-align:center;margin-top:4px;
+}
+
+/* Like reminder (win screen) */
+#like-reminder{
+  font-family:'Orbitron',monospace;font-size:.58rem;
+  letter-spacing:2px;color:rgba(255,255,255,.4);
+  text-align:center;animation:lrP 2s ease-in-out infinite alternate;
+}
+@keyframes lrP{from{color:rgba(255,255,255,.3)}to{color:rgba(255,255,255,.65)}}
+
+/* Hype milestone — fullscreen flash */
+#hype-flash{
+  display:none;position:fixed;inset:0;z-index:900;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,215,0,.18) 0%,transparent 70%);
+  animation:hfA .6s ease-out forwards;
+}
+@keyframes hfA{0%{opacity:1}100%{opacity:0}}
+
+/* Countdown urgency (son 5 sekund) */
+#urgency-bar{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:750;
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:clamp(3rem,10vw,6rem);color:#FF2D78;
+  text-shadow:0 0 60px #FF2D78;pointer-events:none;
+  animation:ubP .4s ease-in-out infinite alternate;
+}
+@keyframes ubP{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.08)}}
+
+/* ── ALGORITHM BOOSTER CSS ── */
+
+/* Heat effect — lider kuchayganida fon isiydi */
+#heat-overlay{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,60,0,0) 0%,transparent 70%);
+  transition:background 1.2s ease;
+}
+#heat-overlay.hot{
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,60,0,.09) 0%,transparent 65%);
+}
+
+/* Drama moment — 2 daqiqada bir pull back */
+#drama-hook{
+  display:none;position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);z-index:850;
+  font-family:'Orbitron',monospace;font-weight:900;
+  font-size:clamp(1rem,3vw,1.6rem);letter-spacing:3px;
+  padding:14px 28px;border-radius:10px;text-align:center;
+  background:rgba(6,0,26,.97);pointer-events:none;
+  border:2px solid rgba(255,215,0,.6);
+  box-shadow:0 0 60px rgba(255,215,0,.25);
+  color:#FFD700;
+}
+
+/* Viewer pulse badge */
+#viewer-badge{
+  position:fixed;top:8px;right:10px;
+  font-family:'Orbitron',monospace;font-size:.44rem;
+  letter-spacing:1px;padding:3px 9px;border-radius:4px;
+  background:rgba(255,45,120,.1);border:1px solid rgba(255,45,120,.4);
+  color:#FF2D78;z-index:600;
+  animation:vbP 2s ease-in-out infinite alternate;
+}
+@keyframes vbP{from{opacity:.6}to{opacity:1}}
+</style>
+</head>
+<body>
+<div id="root">
+  <div id="top">
+    <div id="cam">
+      <div id="ad-slot">STREAM CAM</div>
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+      <div class="cam-label">BATTLE ROYALE</div>
+    </div>
+    <div id="winners">
+      <div class="win-ttl">🏆 CHAMPIONS</div>
+      <div id="winners-list">
+        <div class="win-row">
+          <span class="win-rk">—</span>
+          <span class="win-em">⚔️</span>
+          <span class="win-nm" style="color:rgba(255,255,255,.25);font-size:.56rem">No champion yet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="leader">
+    <div class="ldot"></div>
+    <span id="l-em">—</span>
+    <span id="l-nm">WAITING...</span>
+    <span id="l-vt">0 votes</span>
+    <div class="yt-st wait" id="yt-badge">🔄 CONNECTING</div>
+  </div>
+    <div id="cta-bar">
+    <span class="cta-icon">⚔️</span>
+    <span class="cta-text">TYPE YOUR EMOJI IN CHAT — DEFEND IT!</span>
+    <span class="cta-icon">🏆</span>
+  </div>
+  <div id="arena-outer">
+    <div id="arena-wrap">
+      <div id="arena-bg"></div>
+      <div id="arena-ring"></div>
+      <div id="arena-ring2"></div>
+    </div>
+  </div>
+  <div id="round-bar">
+    <div class="rb rb-rnd" id="t-round">ROUND 1</div>
+    <div class="rb rb-phase" id="t-phase">⚔ BATTLE</div>
+    <div class="rb rb-timer" id="t-timer">1:00</div>
+    <div class="rb rb-alive" id="t-alive">🟢 20</div>
+  </div>
+  <div id="elim-sec">
+    <div class="elim-ttl"><div class="e-dot"></div>ELIMINATED</div>
+    <div id="elim-scroll"></div>
+  </div>
+</div>
+
+<div id="wscreen">
+  <div class="cf-wrap" id="cf"></div>
+  <div class="w-trophy">🏆</div>
+  <div class="w-title">CHAMPION!</div>
+  <div class="w-em" id="w-em">🎉</div>
+  <div class="w-nm" id="w-nm">—</div>
+  <div class="w-vt" id="w-vt">0 votes</div>
+  <div class="w-rounds-badge" id="w-rounds">ROUND 1</div>
+  <button class="w-sub-btn" onclick="openSubscribe()">
+    <span class="sub-icon">🔔</span>
+    <span>SUBSCRIBE FOR MORE</span>
+  </button>
+  <div class="w-cta">⚔️ TYPE YOUR EMOJI FOR NEXT ROUND!</div>
+  <div class="w-next" id="w-next">Next round in 10…</div>
+<div id="next-teaser"></div>
+<div id="like-reminder">👍 SMASH LIKE IF YOU PREDICTED THE WINNER!</div>
+</div>
+
+<div id="hflash"></div>
+<div id="toast"></div>
+<div class="ms-banner" id="ms">🎉 Amazing!</div>
+<div id="sound-badge">🔊 TAP FOR SOUND</div>
+
+<!-- SUBSCRIBE BANNER -->
+<div id="sub-banner">
+  <span class="sb-bell">🔔</span>
+  <div class="sb-lines">
+    <span class="sb-main">SUBSCRIBE TO WATCH LIVE!</span>
+    <span class="sb-hint">TAP THE BELL — NEVER MISS A BATTLE</span>
+  </div>
+</div>
+
+<!-- STREAK COUNTER -->
+<div id="streak-bar">🔥 1 ROUND WATCHED</div>
+
+<!-- CHAT REMINDER -->
+<div id="chat-reminder">💬 TYPE ANY EMOJI TO JOIN THE BATTLE!</div>
+
+<!-- AUDIENCE SIGNALS ELEMENTS -->
+<div id="first-blood"></div>
+<div id="comeback"></div>
+<div id="dead-air"></div>
+<div id="hype-flash"></div>
+<div id="urgency-bar"></div>
+<div id="heat-overlay"></div>
+<div id="drama-hook"></div>
+<div id="viewer-badge">🔴 LIVE</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════════════════
+   STICKERS & EXTRA
+═══════════════════════════════════════════════════════ */
+const STICKERS = [
+  {e:'😂',n:'LOL'},{e:'😍',n:'Love'},{e:'🔥',n:'Fire'},
+  {e:'💀',n:'Skull'},{e:'👻',n:'Ghost'},{e:'🤖',n:'Robot'},
+  {e:'👑',n:'King'},{e:'🦁',n:'Lion'},{e:'🐯',n:'Tiger'},
+  {e:'🐺',n:'Wolf'},{e:'🦊',n:'Fox'},{e:'🐉',n:'Dragon'},
+  {e:'🦄',n:'Unicorn'},{e:'🚀',n:'Rocket'},{e:'💎',n:'Diamond'},
+  {e:'⚡',n:'Thunder'},{e:'🌟',n:'Star'},{e:'🎯',n:'Target'},
+  {e:'🏆',n:'Trophy'},{e:'🤩',n:'Superstar'}
+];
+const EXTRA = {
+  '😀':'Grin','😎':'Cool','🥳':'Party','🤠':'Cowboy','🎃':'Pumpkin',
+  '🐱':'Cat','🐶':'Dog','🐸':'Frog','🐻':'Bear','👽':'Alien',
+  '🎮':'Gamer','💪':'Strong','🍕':'Pizza','🌈':'Rainbow','🦋':'Butterfly',
+  '❤️':'Heart','💯':'100','🎵':'Music','😱':'Shock','🤯':'Mindblown',
+  '🦈':'Shark','🦅':'Eagle','🐊':'Croc','🦂':'Scorpion','🕷️':'Spider',
+  '⚔️':'Sword','🛡️':'Shield','💣':'Bomb','🌪️':'Tornado','☄️':'Meteor',
+};
+
+/* ═══════════════════════════════════════════════════════
+   GAME CONFIG
+═══════════════════════════════════════════════════════ */
+const ROUND_S    = 60;
+const WIN_AUTO   = 10;
+const MAX_ARENA  = 20;
+const BASE_SPEED = 1.4; // 1x bazis tezlik
+const BALL_R     = 22;
+const MAX_PARTICLES = 80; // PERF: particle cheklovi
+
+/* ═══════════════════════════════════════════════════════
+   GAME STATE
+═══════════════════════════════════════════════════════ */
+let fighters   = [];
+let eliminated = [];
+let allWinners = [];
+let gameNum    = 0;
+let phase      = 'idle';
+let roundLeft  = ROUND_S;
+let winLeft    = WIN_AUTO;
+let _elimAcc   = 0;
+let _tick      = null;
+let _raf       = null;
+let aR = 0, CX = 0, CY = 0;
+let _fq        = {};
+let _totalVotes = 0;
+let _fid       = 0;
+const MS_LVLS  = [10, 25, 50, 100, 200, 500];
+let _msIdx     = 0;
+
+/* PERF: DOM cache — har safar getElementById chaqirilmaydi */
+const DOM = {};
+function initDOMCache() {
+  DOM.arenaWrap  = document.getElementById('arena-wrap');
+  DOM.elimScroll = document.getElementById('elim-scroll');
+  DOM.tRound     = document.getElementById('t-round');
+  DOM.tTimer     = document.getElementById('t-timer');
+  DOM.tPhase     = document.getElementById('t-phase');
+  DOM.tAlive     = document.getElementById('t-alive');
+  DOM.lEm        = document.getElementById('l-em');
+  DOM.lNm        = document.getElementById('l-nm');
+  DOM.lVt        = document.getElementById('l-vt');
+  DOM.wScreen    = document.getElementById('wscreen');
+  DOM.wEm        = document.getElementById('w-em');
+  DOM.wNm        = document.getElementById('w-nm');
+  DOM.wVt        = document.getElementById('w-vt');
+  DOM.wNext      = document.getElementById('w-next');
+  DOM.wRounds    = document.getElementById('w-rounds');
+  DOM.winList    = document.getElementById('winners-list');
+  DOM.cf         = document.getElementById('cf');
+  DOM.toast      = document.getElementById('toast');
+  DOM.ms         = document.getElementById('ms');
+  DOM.ytBadge    = document.getElementById('yt-badge');
+  DOM.subBanner  = document.getElementById('sub-banner');
+  DOM.streakBar  = document.getElementById('streak-bar');
+  DOM.chatReminder = document.getElementById('chat-reminder');
+  DOM.firstBlood   = document.getElementById('first-blood');
+  DOM.comeback     = document.getElementById('comeback');
+  DOM.deadAir      = document.getElementById('dead-air');
+  DOM.hypeFl       = document.getElementById('hype-flash');
+  DOM.urgency      = document.getElementById('urgency-bar');
+  DOM.nextTeaser   = document.getElementById('next-teaser');
+  DOM.heatOverlay  = document.getElementById('heat-overlay');
+  DOM.dramaHook    = document.getElementById('drama-hook');
+  DOM.viewerBadge  = document.getElementById('viewer-badge');
+}
+
+/* PERF: node cache — fighters uchun DOM referenslari */
+const nodeCache = new Map();
+
+/* PERF: cached ball size */
+let _cachedBS = 0;
+function ballSize() {
+  if (!_cachedBS) _cachedBS = Math.max(26, Math.min(42, aR * .13));
+  return _cachedBS;
+}
+
+/* PERF: vote queue — bir vaqtda kelgan ovozlar batched */
+const voteQueue = [];
+let voteProcessing = false;
+function processVoteQueue() {
+  if (voteProcessing || !voteQueue.length) return;
+  voteProcessing = true;
+  // Har frameda max 5 ta vote qayta ishlash — junk to'planmaydi
+  const batch = voteQueue.splice(0, 5);
+  batch.forEach(raw => _processVote(raw));
+  voteProcessing = false;
+  if (voteQueue.length) requestAnimationFrame(processVoteQueue);
+}
+
+/* PERF: refreshNodes throttle — har 500ms da bir marta */
+let _refreshT = 0;
+function maybeRefreshNodes(alive) {
+  const now = Date.now();
+  if (now - _refreshT < 500) return;
+  _refreshT = now;
+  refreshNodes(alive);
+}
+
+/* ═══════════════════════════════════════════════════════
+   EMOJI UTILS
+═══════════════════════════════════════════════════════ */
+const _seg = (typeof Intl !== 'undefined' && Intl.Segmenter)
+  ? new Intl.Segmenter([], {granularity:'grapheme'}) : null;
+function graphemes(s) {
+  return _seg ? [..._seg.segment(s)].map(x => x.segment) : [...s];
+}
+function norm(s) {
+  return (s||'').replace(/\uFE0F/g,'').replace(/\u20E3/g,'').trim();
+}
+function firstEmoji(s) {
+  for (const g of graphemes(s)) {
+    const cp = g.codePointAt(0);
+    if (!cp || cp <= 127) continue;
+    if (cp>=0x2300||(cp>=0x1F000&&cp<=0x1FFFF)||(cp>=0x2600&&cp<=0x27BF)||(cp>=0x2B00&&cp<=0x2BFF)) return g;
+  }
+  return null;
+}
+function emojiName(e) {
+  const f = STICKERS.find(x => norm(x.e)===norm(e));
+  if (f) return f.n;
+  return EXTRA[e]||EXTRA[norm(e)]||'Fighter';
+}
+
+/* ═══════════════════════════════════════════════════════
+   ARENA SIZE
+═══════════════════════════════════════════════════════ */
+function sizeArena() {
+  const o = document.getElementById('arena-outer');
+  const w = DOM.arenaWrap || document.getElementById('arena-wrap');
+  if (!o || !w) return;
+  const r = o.getBoundingClientRect();
+  const s = Math.min(r.width, r.height) - 4;
+  w.style.width  = s + 'px';
+  w.style.height = s + 'px';
+  aR = s / 2 - 8;
+  CX = s / 2;
+  CY = s / 2;
+  _cachedBS = 0;   // Reset cache on resize
+  _arenaRect = null; // Fix B: rect cache reset
+}
+
+/* ═══════════════════════════════════════════════════════
+   ELIM INTERVAL
+═══════════════════════════════════════════════════════ */
+function calcInterval() {
+  const aliveCount = aliveArr.length; // Fix #6: cached
+  if (aliveCount <= 1) return 999;
+  return Math.max(1, roundLeft + 1) / (aliveCount - 1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT GAME
+═══════════════════════════════════════════════════════ */
+function initGame() {
+  sizeArena();
+  fighters    = [];
+  eliminated  = [];
+  _fid        = 0;
+  _totalVotes = 0;
+  _msIdx      = 0;
+  _fq         = {};
+  _elimAcc    = 0;
+  roundLeft   = ROUND_S;
+  voteQueue.length = 0; // Fix A: eski ovozlar yangi raundga o'tmasin
+  gameNum++;
+  phase       = 'game';
+  nodeCache.clear();
+
+  const chosen = [...STICKERS].sort(() => Math.random() - .5);
+  chosen.forEach((s, i) => {
+    const ang = (i / chosen.length) * Math.PI * 2 + (Math.random() - .5) * .22;
+    const r   = aR * (0.18 + (i % 4) * 0.14 + Math.random() * .08);
+    const dir = Math.random() * Math.PI * 2;
+    const spd = BASE_SPEED * (0.85 + Math.random() * .3);
+    fighters.push({
+      id: `f${_fid++}`, e: s.e, n: s.n,
+      votes: 0, alive: true,
+      spd: spd,
+      wander: Math.random()*Math.PI*2,
+      x: CX + r * Math.cos(ang), y: CY + r * Math.sin(ang),
+      vx: Math.cos(dir) * spd,   vy: Math.sin(dir) * spd,
+    });
+  });
+
+  DOM.tRound.textContent = `ROUND ${gameNum}`;
+  DOM.tTimer.textContent = '1:00';
+  setPhase('game');
+  document.querySelectorAll('.snode,.vburst,.joinfx').forEach(e => e.remove());
+  DOM.elimScroll.innerHTML = '';
+
+  fighters.forEach(mkNode);
+  rebuildAlive(); // Fix #1: cache yoqiladi
+  resetSignals();
+  updAlive();
+  updLeader();
+
+  clearInterval(_tick);
+  _tick = setInterval(tick, 1000);
+  cancelAnimationFrame(_raf);
+  loop();
+  startChatReminder();
+}
+
+/* ═══════════════════════════════════════════════════════
+   NODE — PERF: transform + cached ref
+═══════════════════════════════════════════════════════ */
+function mkNode(f) {
+  const bs  = ballSize();
+  const el  = document.createElement('div');
+  el.className = 'snode';
+  el.id        = `n-${f.id}`;
+  el.innerHTML = `<div class="s-ball" style="width:${bs}px;height:${bs}px"><span class="s-em">${f.e}</span></div><span class="s-vt">—</span>`;
+  // PERF: GPU accelerated transform yerine left/top
+  el.style.left = '0px';
+  el.style.top  = '0px';
+  const _half=ballSize()/2; el.style.transform = `translate(${f.x-_half}px,${f.y-_half}px)`; // Fix #2: calc() yo'q
+  DOM.arenaWrap.appendChild(el);
+  nodeCache.set(f.id, { el, vtEl: el.querySelector('.s-vt') });
+}
+
+/* ═══════════════════════════════════════════════════════
+   PHYSICS LOOP — GPU-accelerated, GC-minimal
+   Fix: cached aliveArr, no calc(), no DOM reads in RAF
+═══════════════════════════════════════════════════════ */
+
+// aliveArr — cached alive fighters, yangi fighter/elim bo'lganda yangilanadi
+let aliveArr = [];
+function rebuildAlive() { aliveArr = fighters.filter(f => f.alive); }
+
+function loop() {
+  if (phase === 'game') {
+    // Fix #1: aliveArr cached — har frame filter() yo'q
+    const alive = aliveArr;
+    const bs = ballSize();
+    const R  = bs / 2 + 2;
+    const md = R * 2;
+    const half = bs / 2; // Fix #2: calc() o'rniga oldindan hisoblash
+
+    for (const f of alive) {
+      const cx = CX - f.x, cy = CY - f.y;
+      // Fix #1: distCenter uchun sqrt faqat kerak bo'lganda
+      const dist2 = cx*cx + cy*cy;
+      const pullStr = dist2 > (aR * 0.75) * (aR * 0.75) ? 0.06 : 0.0;
+      const pullAng = Math.atan2(cy, cx);
+      f.wander = (f.wander || Math.random()*Math.PI*2) + (Math.random()-0.5)*0.10;
+      const curAng = Math.atan2(f.vy, f.vx);
+      const targetAng = pullStr > 0
+        ? Math.atan2(
+            Math.sin(f.wander)*(1-pullStr) + Math.sin(pullAng)*pullStr,
+            Math.cos(f.wander)*(1-pullStr) + Math.cos(pullAng)*pullStr
+          )
+        : f.wander;
+      let diff = targetAng - curAng;
+      diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+      const newAng = curAng + diff * 0.05;
+      // Dinamik tezlik: boshida 2x, oxirida 1x
+      const _dynMult = 1 + Math.max(0, roundLeft - 1) / 59;
+      const sp = (f.spd || BASE_SPEED) * _dynMult;
+      f.vx = Math.cos(newAng) * sp;
+      f.vy = Math.sin(newAng) * sp;
+      f.x += f.vx;
+      f.y += f.vy;
+
+      const dx = f.x - CX, dy = f.y - CY;
+      const d  = Math.sqrt(dx*dx + dy*dy);
+      if (d + R > aR) {
+        const nx = dx/d, ny = dy/d;
+        const dot = f.vx*nx + f.vy*ny;
+        if (dot > 0) { f.vx -= 2*dot*nx; f.vy -= 2*dot*ny; }
+        const ov = d + R - aR;
+        f.x -= nx*ov; f.y -= ny*ov;
+        f.wander = Math.atan2(f.vy, f.vx) + (Math.random()-0.5)*0.5;
+        const ws = Math.sqrt(f.vx*f.vx + f.vy*f.vy);
+        if (ws > 0.001) { f.vx=(f.vx/ws)*sp; f.vy=(f.vy/ws)*sp; } // sp allaqachon dinamik
+      }
+    }
+
+    // Kolliziya
+    for (let i = 0; i < alive.length; i++) {
+      for (let j = i+1; j < alive.length; j++) {
+        const a = alive[i], b = alive[j];
+        const dx = b.x-a.x, dy = b.y-a.y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < md*md && d2 > 0.01) {
+          const d  = Math.sqrt(d2);
+          const nx = dx/d, ny = dy/d;
+          const ov = (md-d)/2 + 0.5;
+          a.x -= nx*ov; a.y -= ny*ov;
+          b.x += nx*ov; b.y += ny*ov;
+          const p = (a.vx-b.vx)*nx + (a.vy-b.vy)*ny;
+          if (p > 0) {
+            a.vx -= p*nx; a.vy -= p*ny;
+            b.vx += p*nx; b.vy += p*ny;
+            const sA=Math.sqrt(a.vx*a.vx+a.vy*a.vy);
+            const _dynA=(a.spd||BASE_SPEED)*(1+Math.max(0,roundLeft-1)/59);
+            if(sA>0.001){a.vx=(a.vx/sA)*_dynA;a.vy=(a.vy/sA)*_dynA;}
+            const sB=Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+            const _dynB=(b.spd||BASE_SPEED)*(1+Math.max(0,roundLeft-1)/59);
+            if(sB>0.001){b.vx=(b.vx/sB)*_dynB;b.vy=(b.vy/sB)*_dynB;}
+            a.wander = Math.atan2(a.vy,a.vx) + (Math.random()-0.5)*0.4;
+            b.wander = Math.atan2(b.vy,b.vx) + (Math.random()-0.5)*0.4;
+            flashHit(a.id); flashHit(b.id);
+          }
+        }
+      }
+    }
+
+    // Fix #2: translate(Xpx, Ypx) — calc() yo'q, GPU compositing ishlaydi
+    // Fix #5: f.alive tekshiramiz — classList.contains('out') yo'q
+    for (const f of alive) {
+      const cached = nodeCache.get(f.id);
+      if (cached && f.alive) {
+        cached.el.style.transform = `translate(${f.x - half}px,${f.y - half}px)`;
+      }
+    }
+    maybeRefreshNodes(alive);
+  }
+  if (phase !== 'idle') _raf = requestAnimationFrame(loop);
+}
+
+// Hit throttle — har 80ms dan bir marta ovoz chiqadi (haddan ko'p bo'lmasin)
+let _hitSoundT = 0;
+function flashHit(id) {
+  if (_fq[id]) return;
+  _fq[id] = true;
+  const cached = nodeCache.get(id);
+  if (cached) {
+    cached.el.classList.add('hit');
+    // Ovoz throttle — ko'p to'qnashuvda spam bo'lmasin
+    const now = Date.now();
+    if (now - _hitSoundT > 80) {
+      _hitSoundT = now;
+      sfx('hit');
+    }
+    setTimeout(() => { cached.el.classList.remove('hit'); delete _fq[id]; }, 112);
+  }
+}
+
+/* PERF: cached node refs */
+function refreshNodes(alive) {
+  if (!alive.length) return;
+  let maxV = 0, minV = Infinity;
+  for (const f of alive) {
+    if (f.votes > maxV) maxV = f.votes;
+    if (f.votes < minV) minV = f.votes;
+  }
+  for (const f of alive) {
+    const cached = nodeCache.get(f.id);
+    if (!cached || cached.el.classList.contains('out')) continue;
+    cached.el.classList.toggle('leader', f.votes === maxV && f.votes > 0);
+    cached.el.classList.toggle('danger', f.votes === minV && alive.length > 1);
+    cached.vtEl.textContent = f.votes > 0 ? `${f.votes}▲` : '—';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   TICK
+═══════════════════════════════════════════════════════ */
+function tick() {
+  if (phase === 'game') {
+    roundLeft--;
+    const safe = Math.max(0, roundLeft);
+    const m = Math.floor(safe/60), s = safe%60;
+    DOM.tTimer.textContent = `${m}:${s<10?'0'+s:s}`;
+
+    if (roundLeft > 0 && roundLeft <= 5) { sfx('warn'); checkUrgency(); }
+
+    _elimAcc += 1;
+    const interval = calcInterval();
+    if (_elimAcc >= interval) {
+      _elimAcc -= interval;
+      // Fix #6: aliveArr cached — filter yo'q
+      if (aliveArr.length > 1) {
+        const minV = aliveArr.reduce((a,f) => f.votes < a ? f.votes : a, Infinity);
+        const pool = aliveArr.filter(f => f.votes === minV);
+        elim(pool[Math.floor(Math.random()*pool.length)]);
+      }
+    }
+
+    updAlive(); updLeader();
+
+    // Fix #6: aliveArr cached — ikkinchi filter yo'q
+    if (roundLeft <= 0 || aliveArr.length <= 1) {
+      clearInterval(_tick); _tick = null;
+      const winner = aliveArr[0] || [...fighters].sort((a,b) => b.votes-a.votes)[0];
+      if (winner) setTimeout(() => showWin(winner), 800);
+    }
+  } else if (phase === 'winwait') {
+    winLeft--;
+    DOM.wNext.textContent = `Next round in ${winLeft}…`;
+    if (winLeft <= 0) {
+      DOM.wScreen.classList.remove('on');
+      DOM.cf.innerHTML = '';
+      document.querySelectorAll('.snode,.vburst,.joinfx').forEach(e => e.remove());
+      nodeCache.clear();
+      initGame();
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   ELIM — PERF: cached node
+═══════════════════════════════════════════════════════ */
+function elim(f) {
+  f.alive = false;
+  rebuildAlive(); // Fix #1: cache yangilanadi
+  showFirstBlood(f); // Signal: first blood retention hook
+  pulseViewerBadge();
+  sfx('elim');
+  eliminated.push(f);
+  // PERF: eliminated ro'yxatini cheklash (memory leak oldini olish)
+  if (eliminated.length > 100) eliminated = eliminated.slice(-50);
+
+  const item = document.createElement('div');
+  item.className = 'e-item';
+  item.title     = f.n;
+  item.textContent = f.e;
+  DOM.elimScroll.appendChild(item);
+  setTimeout(() => { DOM.elimScroll.scrollLeft = DOM.elimScroll.scrollWidth; }, 50);
+
+  const cached = nodeCache.get(f.id);
+  if (cached) {
+    spawnPts(f.x, f.y); // Fix #4: pozitsiya beriladi, reflow yo'q
+    cached.el.classList.add('out');
+    setTimeout(() => {
+      cached.el.remove();
+      nodeCache.delete(f.id);
+    }, 900);
+  }
+
+  toast(`💥 ${f.e} ${f.n} eliminated!`);
+  updAlive();
+}
+
+/* ═══════════════════════════════════════════════════════
+   WIN
+═══════════════════════════════════════════════════════ */
+function showWin(f) {
+  if (!f) return;
+  cancelAnimationFrame(_raf); _raf = null;
+  sfx('win');
+  _roundsWatched++;
+  allWinners.unshift({e:f.e, n:f.n, votes:f.votes});
+  if (allWinners.length > 3) allWinners = allWinners.slice(0,3);
+  updWinners();
+  DOM.wEm.textContent  = f.e;
+  DOM.wNm.textContent  = f.n.toUpperCase();
+  DOM.wVt.textContent  = `${f.votes} votes — CHAMPION!`;
+  if (DOM.wRounds) DOM.wRounds.textContent = `ROUND ${gameNum} COMPLETE • YOU'VE WATCHED ${_roundsWatched} ROUND${_roundsWatched>1?'S':''}`;
+  winLeft = WIN_AUTO;
+  DOM.wNext.textContent = `Next round in ${winLeft}…`;
+  DOM.wScreen.classList.add('on');
+  showNextTeaser(STICKERS.length); // Signal: next round teaser
+  spawnConfetti();
+  phase = 'winwait';
+  clearInterval(_tick);
+  _tick = setInterval(tick, 1000);
+  // Retention triggers
+  updateStreak();
+  maybeShowSubBanner();
+}
+
+function updWinners() {
+  if (!allWinners.length) return;
+  const medals = ['🥇','🥈','🥉'];
+  DOM.winList.innerHTML = allWinners.map((w,i) => `
+    <div class="win-row">
+      <span class="win-rk">${medals[i]||i+1}</span>
+      <span class="win-em">${w.e}</span>
+      <span class="win-nm">${w.n}</span>
+      <span class="win-ct">${w.votes}V</span>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   VOTE — PERF: queue bilan
+═══════════════════════════════════════════════════════ */
+function vote(raw) {
+  if (phase !== 'game') return;
+  if (!raw || !raw.trim()) return;
+  voteQueue.push(raw.trim());
+  requestAnimationFrame(processVoteQueue);
+}
+
+function _processVote(raw) {
+  if (phase !== 'game') return;
+  const emoji = firstEmoji(raw);
+  if (!emoji) return;
+
+  _totalVotes++;
+  const match = findF(emoji, true);
+
+  if (match) {
+    match.votes++;
+    checkComeback(match); // Signal: comeback narrative
+    sfx('vote');
+    voteBurst(match);
+    toast(`${match.e} +1 (${match.votes} votes)`);
+  } else {
+    const dead = findF(emoji, false);
+    if (dead) { toast(`❌ ${dead.e} eliminated!`); return; }
+    if (aliveArr.length < MAX_ARENA) { // Fix #1: cached
+      const nf = addFighter(emoji);
+      if (nf) { nf.votes++; toast(`🆕 ${emoji} ${nf.n} ENTERED!`); }
+    } else {
+      toast('⚠️ Arena full!');
+    }
+  }
+  checkMs(); checkHype(); updLeader(); updateTitle(); updateHeat(); resetDeadAir();
+}
+
+function findF(emoji, aliveOnly) {
+  const pool = aliveOnly ? aliveArr : fighters; // Fix #1: cached
+  const n = norm(emoji);
+  return pool.find(f => norm(f.e)===n || f.e===emoji) || null;
+}
+
+function addFighter(emoji) {
+  if (aliveArr.length >= MAX_ARENA) return null; // Fix #1: cached
+  if (findF(emoji, false)) return null;
+  const id  = `f${_fid++}`;
+  const name = emojiName(emoji);
+  const ang  = Math.random()*Math.PI*2;
+  const r    = aR*(0.2+Math.random()*.45);
+  const dir  = Math.random()*Math.PI*2;
+  const spd  = BASE_SPEED*(0.85+Math.random()*.3);
+  const f = { id, e:emoji, n:name, votes:0, alive:true,
+    spd: spd,
+    wander: Math.random()*Math.PI*2,
+    x:CX+r*Math.cos(ang), y:CY+r*Math.sin(ang),
+    vx:Math.cos(dir)*spd, vy:Math.sin(dir)*spd };
+  fighters.push(f);
+  mkNode(f);
+  rebuildAlive(); // Fix #1: cache yangilanadi
+  sfx('join');
+  const b = document.createElement('div');
+  b.className   = 'joinfx';
+  b.textContent = `${emoji} ${name.toUpperCase()} ENTERED!`;
+  document.body.appendChild(b);
+  setTimeout(() => b.remove(), 1000);
+  updAlive();
+  return f;
+}
+
+/* ═══════════════════════════════════════════════════════
+   UI — PERF: cached DOM refs
+═══════════════════════════════════════════════════════ */
+function updAlive() {
+  DOM.tAlive.textContent = `🟢 ${aliveArr.length}`; // Fix #11: cached
+}
+function updLeader() {
+  let top = null;
+  for (const f of fighters) {
+    if (!f.alive) continue;
+    if (!top || f.votes > top.votes) top = f;
+  }
+  if (top && top.votes > 0) {
+    DOM.lEm.textContent = top.e;
+    DOM.lNm.textContent = top.n.toUpperCase();
+    DOM.lVt.textContent = `${top.votes} votes`;
+  } else {
+    DOM.lEm.textContent = '—';
+    DOM.lNm.textContent = 'WAITING...';
+    DOM.lVt.textContent = '0 votes';
+  }
+  updateTitle(); // Signal: dynamic title CTR
+}
+function setPhase(p) {
+  if (p==='game') { DOM.tPhase.textContent='⚔ BATTLE'; DOM.tPhase.className='rb rb-phase'; }
+  else            { DOM.tPhase.textContent='⏸ BREAK';  DOM.tPhase.className='rb rb-phase brk'; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   SOCKET
+═══════════════════════════════════════════════════════ */
+function connectSocket() {
+  const badge = DOM.ytBadge;
+  if (typeof io === 'undefined') {
+    badge.textContent = '⚠️ NO SERVER'; badge.className = 'yt-st off'; return;
+  }
+  const socket = io({
+    transports: ['websocket','polling'],
+    reconnection: true,
+    reconnectionDelay: 2000,
+    reconnectionAttempts: Infinity,
+  });
+  socket.on('connect',    () => { badge.textContent='🟢 YT LIVE';     badge.className='yt-st on'; });
+  socket.on('disconnect', () => { badge.textContent='🔄 RECONNECTING'; badge.className='yt-st wait'; });
+  socket.on('yt_status', data => {
+    const s = data.status;
+    if      (s==='CONNECTED')    { badge.textContent='🟢 YT LIVE';   badge.className='yt-st on';   toast('✅ YouTube connected!'); }
+    else if (s==='CONNECTING')   { badge.textContent='🔄 CONNECTING'; badge.className='yt-st wait'; }
+    else if (s==='ERROR')        { badge.textContent='⚠️ ERROR';       badge.className='yt-st off'; }
+    else if (s==='NOT_LIVE')     { badge.textContent='⏸ NOT LIVE';    badge.className='yt-st off'; }
+    else if (s==='STREAM_ENDED') { badge.textContent='🏁 ENDED';       badge.className='yt-st off'; }
+    else if (s==='NO_API_KEY')   { badge.textContent='⚠️ NO KEY';      badge.className='yt-st off'; }
+    else if (s==='API_ERROR')    { badge.textContent='⚠️ API ERR';     badge.className='yt-st off'; }
+  });
+  socket.on('vote', data => {
+    const raw = data.text || data.emoji || data.emojiId || '';
+    if (raw) vote(raw);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   AUDIO — CINEMATIC BATTLE ROYALE ENGINE
+   BPM: 100 | Warm sine/triangle waves | Epic feel
+═══════════════════════════════════════════════════════ */
+let AC = null, audioReady = false;
+let _bgGain = null, _bgLoopId = null, _bgT0 = 0;
+
+function initAudio() {
+  if (audioReady) return;
+  try {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state==='suspended') AC.resume();
+    audioReady = true;
+    const sb = document.getElementById('sound-badge');
+    if (sb) { sb.textContent='🔊 SOUND ON'; setTimeout(()=>sb.remove(),1800); }
+  } catch(e) { console.warn('Audio:', e); }
+}
+
+/* Master bus: soft compressor, warm output */
+function mkBus(vol) {
+  const g = AC.createGain(); g.gain.value = vol;
+  const c = AC.createDynamicsCompressor();
+  c.threshold.value=-12; c.knee.value=10; c.ratio.value=4;
+  c.attack.value=0.005; c.release.value=0.25;
+  g.connect(c); c.connect(AC.destination);
+  return g;
+}
+
+/* Smooth oscillator — soft attack, natural release */
+function O(freq, dur, type, vol, t, dest, freqEnd) {
+  try {
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, t);
+    if (freqEnd != null) o.frequency.exponentialRampToValueAtTime(freqEnd, t + dur * 0.80);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t + 0.018);       // soft attack
+    g.gain.setValueAtTime(vol * 0.72, t + dur * 0.60);
+    g.gain.linearRampToValueAtTime(0, t + dur);            // smooth release
+    o.connect(g); g.connect(dest);
+    o.start(t); o.stop(t + dur + 0.02);
+  } catch(e) {}
+}
+
+/* Smooth noise burst — lowpass filtered for warmth */
+function N(dur, vol, t, dest, hpf, lpf) {
+  try {
+    const len = Math.ceil(AC.sampleRate * Math.max(dur, 0.01));
+    const buf = AC.createBuffer(1, len, AC.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i/len, 0.6);
+    const src = AC.createBufferSource(), g = AC.createGain();
+    g.gain.setValueAtTime(vol, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur * 0.90);
+    src.buffer = buf;
+    let node = src;
+    if (hpf) { const f=AC.createBiquadFilter(); f.type='highpass'; f.frequency.value=hpf; node.connect(f); node=f; }
+    if (lpf) { const f=AC.createBiquadFilter(); f.type='lowpass';  f.frequency.value=lpf; node.connect(f); node=f; }
+    node.connect(g); g.connect(dest); src.start(t);
+  } catch(e) {}
+}
+
+/* Deep cinematic kick */
+function KICK(t, dest, vol) {
+  try {
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(140, t);
+    o.frequency.exponentialRampToValueAtTime(42, t + 0.11);
+    g.gain.setValueAtTime(vol || 0.5, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+    o.connect(g); g.connect(dest); o.start(t); o.stop(t + 0.20);
+    N(0.018, (vol || 0.5) * 0.35, t, dest, 0, 800); // soft thud transient
+  } catch(e) {}
+}
+
+/* Warm snare */
+function SNARE(t, dest, vol) {
+  N(0.16, vol || 0.18, t, dest, 1200, 8000);
+  O(200, 0.10, 'triangle', (vol || 0.18) * 0.45, t, dest);
+}
+
+/* Soft open hi-hat */
+function OHAT(t, dest, vol) { N(0.10, vol || 0.055, t, dest, 6000, 18000); }
+
+/* Ghost 16th hi-hat */
+function CHAT(t, dest, vol) { N(0.018, vol || 0.032, t, dest, 9000); }
+
+/* Ambient pad — slow attack, long sustain */
+function PAD(freq, dur, vol, t, dest) {
+  try {
+    const o1=AC.createOscillator(), o2=AC.createOscillator(), g=AC.createGain();
+    o1.type='sine'; o1.frequency.value=freq;
+    o2.type='triangle'; o2.frequency.value=freq*1.004; // slight detune for richness
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t + dur * 0.28);  // slow pad attack
+    g.gain.setValueAtTime(vol * 0.85, t + dur * 0.70);
+    g.gain.linearRampToValueAtTime(0, t + dur);
+    o1.connect(g); o2.connect(g); g.connect(dest);
+    o1.start(t); o1.stop(t+dur+0.05);
+    o2.start(t); o2.stop(t+dur+0.05);
+  } catch(e) {}
+}
+
+/* ─────────────────────────────────────────────────────
+   BACKGROUND MUSIC — Epic Cinematic Battle Theme
+   Key: A minor | BPM: 100 | Warm & atmospheric
+───────────────────────────────────────────────────── */
+function startBgMusic() { /* BGM off */ }
+
+function stopBg() {
+  if (_bgLoopId) { clearTimeout(_bgLoopId); _bgLoopId = null; }
+  if (_bgGain && AC) {
+    try { _bgGain.gain.setTargetAtTime(0, AC.currentTime, 0.25); } catch(e) {}
+    _bgGain = null;
+  }
+}
+
+/* ─────────────────────────────────────────────────────
+   SFX — Polished, cinematic sound effects
+───────────────────────────────────────────────────── */
+function sfx(type) {
+  if (!AC) return;
+  try {
+
+    /* VOTE — soft bright chime */
+    if (type === 'vote') {
+      const m = mkBus(0.22), t = AC.currentTime;
+      O(1760, 0.055, 'sine',     0.55, t,      m);
+      O(2217, 0.040, 'sine',     0.22, t+0.008, m);
+      O(880,  0.060, 'triangle', 0.15, t,       m);
+    }
+
+    /* ELIM — smooth cinematic "out" — whoosh + low thud */
+    if (type === 'elim') {
+      const m = mkBus(0.42), t = AC.currentTime;
+      // Downward pitch sweep — smooth and dramatic
+      O(520, 0.55, 'sine',     0.38, t,      m, 55);
+      O(260, 0.55, 'triangle', 0.18, t+0.02, m, 40);
+      // Single soft cinematic thud
+      KICK(t + 0.08, m, 0.50);
+      // Warm whoosh (low-passed noise)
+      N(0.38, 0.22, t, m, 80, 1200);
+      // Subtle shimmer fade
+      N(0.20, 0.08, t+0.10, m, 3000, 7000);
+    }
+
+    /* JOIN — warm ascending chime, triumphant */
+    if (type === 'join') {
+      const m = mkBus(0.32), t = AC.currentTime;
+      const notes = [440, 554, 659, 880];
+      notes.forEach((f, i) => {
+        O(f,   0.18, 'sine',     0.22 - i*0.03, t + i*0.07, m);
+        O(f*2, 0.14, 'sine',     0.06,           t + i*0.07, m);
+        O(f,   0.16, 'triangle', 0.08,           t + i*0.07, m);
+      });
+      // Soft entry thud
+      KICK(t, m, 0.28);
+    }
+
+    /* HIT — kristall "tik-tik" to'qnashuv ovozi */
+    if (type === 'hit') {
+      const m = mkBus(0.18), t = AC.currentTime;
+      // Asosiy kristall "tik" — yuqori, aniq
+      O(2800, 0.028, 'sine',     0.55, t,       m);
+      O(3500, 0.020, 'sine',     0.28, t+0.004, m);
+      // Rezonans — pastroq, chuqurroq
+      O(1400, 0.045, 'triangle', 0.18, t,       m);
+      // Mikro-zarba — ta'kidlovchi
+      O(900,  0.018, 'sine',     0.12, t+0.006, m, 600);
+    }
+
+    /* WARN — tense pulse */
+    if (type === 'warn') {
+      const m = mkBus(0.25), t = AC.currentTime;
+      O(740, 0.09, 'sine',     0.40, t,      m);
+      O(587, 0.07, 'triangle', 0.18, t+0.05, m);
+    }
+
+    /* WIN — full cinematic fanfare */
+    if (type === 'win') {
+      stopBg();
+      const m = mkBus(0.46), t = AC.currentTime;
+
+      // Rising tension build (soft noise swells)
+      for (let i = 0; i < 7; i++) {
+        const dt = t + i * 0.09;
+        N(0.07, 0.05 + i*0.02, dt, m, 1800, 9000);
+      }
+
+      const re = t + 0.68;
+
+      // Impact
+      KICK(re,      m, 0.82);
+      KICK(re+0.09, m, 0.50);
+      N(0.70, 0.45, re, m, 4000, 16000);  // air burst
+      N(0.55, 0.28, re, m, 80, 400);      // low rumble
+
+      // Fanfare melody — A minor triumph
+      const fanfare = [440,554,659,880,1109,1319,1109,880,740,880,1109,1319];
+      fanfare.forEach((f, i) => {
+        const ft = re + 0.06 + i * 0.11;
+        O(f,   0.24, 'sine',     0.30, ft, m);
+        O(f*2, 0.18, 'sine',     0.08, ft, m);
+        O(f,   0.20, 'triangle', 0.10, ft, m);
+      });
+
+      // Grand chord resolution
+      const gc = re + 1.05;
+      [110,165,220,277,330,440,554,659,880].forEach(f => {
+        PAD(f, 1.6, 0.055, gc, m);
+      });
+      KICK(gc,      m, 0.88);
+      KICK(gc+0.10, m, 0.55);
+      N(1.0, 0.50, gc, m, 4000);
+
+      // Victory melody flourish
+      const vmel = [880,0.13, 988,0.13, 1109,0.13, 1319,0.26, 1109,0.13, 988,0.13, 1319,0.52];
+      let vt = gc + 0.10;
+      for (let i = 0; i < vmel.length; i+=2) {
+        O(vmel[i], vmel[i+1]*0.88, 'sine',     0.28, vt, m);
+        O(vmel[i], vmel[i+1]*0.80, 'triangle', 0.09, vt, m);
+        vt += vmel[i+1];
+      }
+
+      setTimeout(() => { if (audioReady) startBgMusic(); }, 4000);
+    }
+
+  } catch(e) {}
+}
+
+/* ═══════════════════════════════════════════════════════
+   VISUAL FX — PERF: particle limit
+═══════════════════════════════════════════════════════ */
+let _ptCount = 0;
+
+function voteBurst(f) {
+  // Fix #9: pozitsiya to'g'ri — arenaWrap ichida
+  const b = document.createElement('div');
+  b.className   = 'vburst';
+  b.textContent = '+1';
+  const half = ballSize() / 2;
+  b.style.left  = (f.x - half) + 'px';
+  b.style.top   = (f.y - half - 12) + 'px';
+  DOM.arenaWrap.appendChild(b);
+  setTimeout(()=>b.remove(), 780);
+}
+
+// Fix #4: getBoundingClientRect() yo'q — fighter x,y ishlatiladi
+// Fix B: arenaWrap rect cached — elim paytida reflow yo'q
+let _arenaRect = null;
+function getArenaRect() {
+  if (!_arenaRect) _arenaRect = DOM.arenaWrap.getBoundingClientRect();
+  return _arenaRect;
+}
+function spawnPts(fx, fy) {
+  if (_ptCount >= MAX_PARTICLES) return;
+  const wr = getArenaRect();
+  const cx = wr.left + fx, cy = wr.top + fy;
+  const cols=['#FF2D78','#FFD700','#FF6B00','#C080FF','#00FF88'];
+  const count = Math.min(12, MAX_PARTICLES - _ptCount);
+  for (let i=0;i<count;i++) {
+    _ptCount++;
+    const p=document.createElement('div');
+    p.className='pt';
+    const a=(i/count)*Math.PI*2, d=40+Math.random()*45;
+    p.style.cssText=`left:${cx}px;top:${cy}px;width:6px;height:6px;background:${cols[i%5]}`;
+    p.style.setProperty('--dx',`${Math.cos(a)*d}px`);
+    p.style.setProperty('--dy',`${Math.sin(a)*d}px`);
+    document.body.appendChild(p);
+    setTimeout(()=>{ p.remove(); _ptCount--; }, 620);
+  }
+}
+
+function spawnConfetti() {
+  DOM.cf.innerHTML='';
+  const cols=['#FFD700','#FF6B00','#FF2D78','#C080FF','#00FF88','#00CFFF','#fff'];
+  for (let i=0;i<90;i++) {
+    const p=document.createElement('div');
+    p.className='cfp';
+    p.style.left=`${Math.random()*100}%`;
+    p.style.background=cols[i%cols.length];
+    p.style.borderRadius=Math.random()>.5?'50%':'3px';
+    p.style.width=`${4+Math.random()*9}px`;
+    p.style.height=`${4+Math.random()*9}px`;
+    p.style.animationDuration=`${2+Math.random()*3}s`;
+    p.style.animationDelay=`${Math.random()*2}s`;
+    DOM.cf.appendChild(p);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   AUDIENCE SIGNALS — YouTube algoritmiga kuchli signallar
+   1. Dynamic title (CTR)
+   2. Dead air detector (Chat Velocity)
+   3. First Blood (Retention Hook)
+   4. Comeback narrative (Drama = watch time)
+   5. Urgency countdown (Concurrent Viewers)
+   6. Hype milestone flash (Engagement)
+   7. Next round teaser (Average View Duration)
+═══════════════════════════════════════════════════════ */
+
+// ── 1. DYNAMIC TITLE — CTR uchun ────────────────────────────────────
+function updateTitle() {
+  const alive = aliveArr;
+  if (!alive.length) { document.title = '⚔️ BATTLE ROYALE — LIVE EMOJI WAR'; return; }
+  const leader = alive.reduce((a,b) => b.votes > a.votes ? b : a, alive[0]);
+  if (leader && leader.votes > 0) {
+    document.title = `${leader.e} LEADS! ${leader.votes}pts | ⚔️ BATTLE ROYALE LIVE`;
+  } else {
+    document.title = `⚔️ ROUND ${gameNum} — BATTLE ROYALE LIVE | TYPE EMOJI!`;
+  }
+}
+
+// ── 2. DEAD AIR DETECTOR — Chat velocity ────────────────────────────
+let _lastVoteTime  = Date.now();
+let _deadAirTimer  = null;
+const DEAD_AIR_MS  = 22000; // 22s xabar yo'q bo'lsa
+
+function resetDeadAir() {
+  _lastVoteTime = Date.now();
+  hidDeadAir();
+}
+
+function hidDeadAir() {
+  if (DOM.deadAir) DOM.deadAir.style.display = 'none';
+}
+
+function startDeadAirWatch() {
+  clearInterval(_deadAirTimer);
+  _deadAirTimer = setInterval(() => {
+    if (phase !== 'game') return;
+    const idle = Date.now() - _lastVoteTime;
+    if (idle >= DEAD_AIR_MS) {
+      if (DOM.deadAir) {
+        DOM.deadAir.style.display = 'block';
+        DOM.deadAir.innerHTML = '😴 CHAT IS SLEEPING!<br><span style="font-size:.55em;letter-spacing:2px;color:rgba(255,215,0,.7)">TYPE ANY EMOJI TO WAKE IT UP 👇</span>';
+        setTimeout(hidDeadAir, 4000);
+      }
+    }
+  }, 5000);
+}
+
+// ── 3. FIRST BLOOD ──────────────────────────────────────────────────
+let _firstBloodDone = false;
+
+function showFirstBlood(f) {
+  if (_firstBloodDone || !DOM.firstBlood) return;
+  _firstBloodDone = true;
+  DOM.firstBlood.style.display = 'block';
+  DOM.firstBlood.innerHTML = `💀 FIRST BLOOD!<br><span style="font-size:.55em;letter-spacing:3px">${f.e} ${f.n.toUpperCase()} ELIMINATED</span>`;
+  setTimeout(() => { if (DOM.firstBlood) DOM.firstBlood.style.display = 'none'; }, 2200);
+}
+
+// ── 4. COMEBACK NARRATIVE ───────────────────────────────────────────
+let _prevVotes = {};
+
+function checkComeback(f) {
+  const prev = _prevVotes[f.id] || 0;
+  const alive = aliveArr;
+  if (alive.length < 2) return;
+  const minV = alive.reduce((a, x) => x.votes < a ? x.votes : a, Infinity);
+  // Fighter kam ovozda edi va ovoz oldi
+  if (prev === minV && f.votes > prev && alive.length >= 4) {
+    if (DOM.comeback) {
+      DOM.comeback.textContent = `🔥 ${f.e} COMEBACK! UNDERDOG RISING!`;
+      DOM.comeback.classList.add('on');
+      setTimeout(() => DOM.comeback.classList.remove('on'), 3000);
+    }
+  }
+  _prevVotes[f.id] = f.votes;
+}
+
+// ── 5. URGENCY COUNTDOWN (son 5 sekund) ─────────────────────────────
+let _urgencyShown = false;
+
+function checkUrgency() {
+  if (roundLeft <= 5 && roundLeft > 0 && !_urgencyShown && aliveArr.length > 1) {
+    _urgencyShown = true;
+    if (DOM.urgency) {
+      DOM.urgency.style.display = 'block';
+      DOM.urgency.textContent = roundLeft;
+      const interval = setInterval(() => {
+        if (!DOM.urgency) { clearInterval(interval); return; }
+        const t = parseInt(DOM.urgency.textContent) - 1;
+        if (t <= 0) { DOM.urgency.style.display = 'none'; clearInterval(interval); return; }
+        DOM.urgency.textContent = t;
+      }, 1000);
+    }
+  }
+}
+
+// ── 6. HYPE MILESTONE FLASH ─────────────────────────────────────────
+const HYPE_LVLS = [25, 75, 150, 300, 600];
+let _hypeIdx = 0;
+
+function checkHype() {
+  if (_hypeIdx >= HYPE_LVLS.length) return;
+  if (_totalVotes >= HYPE_LVLS[_hypeIdx]) {
+    _hypeIdx++;
+    if (DOM.hypeFl) {
+      DOM.hypeFl.style.display = 'block';
+      setTimeout(() => { if (DOM.hypeFl) DOM.hypeFl.style.display = 'none'; }, 650);
+    }
+  }
+}
+
+// ── 7. NEXT ROUND TEASER (Average view duration uchun) ──────────────
+function showNextTeaser(nextCount) {
+  if (!DOM.nextTeaser) return;
+  DOM.nextTeaser.textContent = `⚡ NEXT ROUND: ${nextCount} FIGHTERS BATTLE — DON'T LEAVE!`;
+}
+
+// ── RESET har raundda ───────────────────────────────────────────────
+
+/* ═══════════════════════════════════════════════════════
+   ALGORITHM BOOSTERS — YouTube ni ko'targich
+   1. Heat overlay — lider kuchayganida vizual drama
+   2. Drama hook — har 2 daqiqada watch time anchor
+   3. Viewer badge — engagement illusion
+   4. Title pulse — search visibility
+═══════════════════════════════════════════════════════ */
+
+// ── 1. HEAT OVERLAY — lider dominantligi vizuali ─────────────────────
+let _heatTimer = null;
+function updateHeat() {
+  if (!DOM.heatOverlay || !aliveArr.length) return;
+  const leader = aliveArr.reduce((a,b) => b.votes>a.votes?b:a, aliveArr[0]);
+  const total  = aliveArr.reduce((s,f) => s+f.votes, 0);
+  const ratio  = total > 0 ? leader.votes / total : 0;
+  // Lider 40%+ ovoz olganda "qiziydi"
+  if (ratio >= 0.4) {
+    DOM.heatOverlay.classList.add('hot');
+  } else {
+    DOM.heatOverlay.classList.remove('hot');
+  }
+}
+
+// ── 2. DRAMA HOOK — har 90s da watch time anchor ────────────────────
+const DRAMA_MSGS = [
+  { t:'👑 WHO WILL SURVIVE?',      s:'TYPE YOUR EMOJI TO DECIDE THE WINNER!' },
+  { t:'⚡ THE BATTLE INTENSIFIES', s:'YOUR VOTE CHANGES EVERYTHING RIGHT NOW!' },
+  { t:'🔥 LAST CHANCE TO VOTE!',   s:'TYPE YOUR EMOJI — SAVE YOUR FIGHTER!' },
+  { t:'💀 SOMEONE FALLS NEXT…',    s:'CAST YOUR VOTE BEFORE TIME RUNS OUT!' },
+  { t:'🏆 CHAMPION EMERGING…',     s:'ONE EMOJI CAN CHANGE THE OUTCOME!' },
+];
+let _dramaIdx = 0;
+let _dramaInterval = null;
+
+function startDramaHook() {
+  clearInterval(_dramaInterval);
+  _dramaInterval = setInterval(() => {
+    if (phase !== 'game' || aliveArr.length <= 2) return;
+    const msg = DRAMA_MSGS[_dramaIdx % DRAMA_MSGS.length];
+    _dramaIdx++;
+    if (!DOM.dramaHook) return;
+    DOM.dramaHook.innerHTML =
+      `${msg.t}<br><span style="font-size:.5em;letter-spacing:2px;color:rgba(255,255,255,.6)">${msg.s}</span>`;
+    DOM.dramaHook.style.display = 'block';
+    setTimeout(() => { if (DOM.dramaHook) DOM.dramaHook.style.display = 'none'; }, 3500);
+  }, 90000); // 90 sekunda
+}
+
+// ── 3. VIEWER BADGE PULSE ─────────────────────────────────────────────
+// YouTube tomosha qiluvchilar soni pastga tushganda engagement oshirishga
+// "LIVE" badge har elim da chaqnaydi
+function pulseViewerBadge() {
+  if (!DOM.viewerBadge) return;
+  DOM.viewerBadge.style.background = 'rgba(255,45,120,.3)';
+  setTimeout(() => {
+    if (DOM.viewerBadge) DOM.viewerBadge.style.background = 'rgba(255,45,120,.1)';
+  }, 400);
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────
+function resetAlgoSignals() {
+  _dramaIdx = 0;
+  if (DOM.heatOverlay) DOM.heatOverlay.classList.remove('hot');
+  if (DOM.dramaHook)   DOM.dramaHook.style.display = 'none';
+  startDramaHook();
+}
+
+function resetSignals() {
+  _firstBloodDone = false;
+  _urgencyShown   = false;
+  _prevVotes      = {};
+  _hypeIdx        = 0;
+  _lastVoteTime   = Date.now();
+  hidDeadAir();
+  if (DOM.urgency)  DOM.urgency.style.display  = 'none';
+  if (DOM.comeback) DOM.comeback.classList.remove('on');
+  updateTitle();
+  startDeadAirWatch();
+  resetAlgoSignals();
+}
+
+/* ═══════════════════════════════════════════════════════
+   RETENTION ENGINE
+═══════════════════════════════════════════════════════ */
+let _roundsWatched = 0;
+let _reminderT     = null;
+
+// Subscribe banner: show after round 1, then every 3 rounds
+function maybeShowSubBanner() {
+  if (_roundsWatched === 1 || (_roundsWatched > 0 && _roundsWatched % 3 === 0)) {
+    DOM.subBanner.classList.add('on');
+    setTimeout(() => DOM.subBanner.classList.remove('on'), 5000);
+  }
+}
+
+// Streak counter: show after round 1
+function updateStreak() {
+  if (_roundsWatched < 1) return;
+  const label = _roundsWatched === 1
+    ? '🔥 1 ROUND WATCHED'
+    : `🔥 ${_roundsWatched} ROUNDS WATCHED`;
+  DOM.streakBar.textContent = label;
+  DOM.streakBar.classList.add('on');
+}
+
+// Chat reminder: pulse every 45 seconds during game
+function startChatReminder() {
+  clearInterval(_reminderT);
+  _reminderT = setInterval(() => {
+    if (phase !== 'game') return;
+    DOM.chatReminder.classList.add('on');
+    setTimeout(() => DOM.chatReminder.classList.remove('on'), 3500);
+  }, 45000);
+}
+
+// Open YouTube subscribe (works when page is embedded in stream)
+function openSubscribe() {
+  try {
+    window.open('https://www.youtube.com/channel/' + (window._YT_CHANNEL_ID||'UCT24pImU78QB7I8a6gofYyA') + '?sub_confirmation=1', '_blank');
+  } catch(e) {}
+}
+
+// Subscribe banner click
+document.addEventListener('DOMContentLoaded', () => {
+  const sb = document.getElementById('sub-banner');
+  if (sb) sb.addEventListener('click', openSubscribe);
+});
+
+
+let _toastT=null;
+function toast(msg) {
+  DOM.toast.textContent=msg;
+  DOM.toast.classList.add('on');
+  clearTimeout(_toastT);
+  _toastT=setTimeout(()=>DOM.toast.classList.remove('on'), 2200);
+}
+
+let _msT=null;
+function checkMs() {
+  if (_msIdx>=MS_LVLS.length) return;
+  if (_totalVotes>=MS_LVLS[_msIdx]) {
+    DOM.ms.textContent=`🎉 ${MS_LVLS[_msIdx]} votes — INCREDIBLE!`;
+    DOM.ms.classList.add('on');
+    sfx('join');
+    clearTimeout(_msT);
+    _msT=setTimeout(()=>DOM.ms.classList.remove('on'), 3500);
+    _msIdx++;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOT
+═══════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    initDOMCache();
+    initGame();
+    connectSocket();
+    startDeadAirWatch(); // Signal: dead air detector
+    startDramaHook();     // Algo: drama hook
+  }));
+});
+
+document.getElementById('sound-badge').addEventListener('click', ()=>{ initAudio(); }, { once: true });
+['click','touchstart'].forEach(ev => document.addEventListener(ev, ()=>{ if(!audioReady) initAudio(); }, { once: true }));
+
+window.addEventListener('resize', () => {
+  sizeArena();
+  const _bs2 = ballSize() / 2;
+  fighters.forEach(f => {
+    const dx=f.x-CX, dy=f.y-CY;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if (dist > aR - _bs2) {
+      const ang=Math.atan2(dy,dx);
+      f.x=CX+Math.cos(ang)*(aR - _bs2 - 4);
+      f.y=CY+Math.sin(ang)*(aR - _bs2 - 4);
+    }
+  });
+});
+</script>
+</body>
+</html>
