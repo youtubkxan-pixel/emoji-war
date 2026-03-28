@@ -1,0 +1,68 @@
+# ═══════════════════════════════════════════════════════════
+#  Emoji War — Render.com Deploy Konfiguratsiyasi
+#  Starter plan ($7/oy) — Docker + 24/7 streaming
+# ═══════════════════════════════════════════════════════════
+
+services:
+  - type: web
+    name: emoji-war
+    # ── Docker rejimi ────────────────────────────────────────
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+
+    # ── Starter plan — Docker uchun MAJBURIY ────────────────
+    # Free tier Docker'ni qo'llab-quvvatlamaydi
+    plan: starter
+
+    # ── Tarmoq ──────────────────────────────────────────────
+    # server.js PORT env ni o'qiydi
+    port: 10000
+
+    # ── Sog'liq tekshiruvi ───────────────────────────────────
+    # Render shu endpoint orqali server tayyor ekanini biladi
+    healthCheckPath: /health
+
+    # ── Avtomatik deploy ─────────────────────────────────────
+    # false = faqat qo'lda "Deploy" bosganda yangilanadi
+    autoDeploy: false
+
+    # ── Server joylashuvi ────────────────────────────────────
+    # Frankfurt — Yevropa va Rossiyaga yaqin
+    region: frankfurt
+
+    # ── Muhit o'zgaruvchilari ────────────────────────────────
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      - key: PORT
+        value: "10000"
+
+      # Render bu o'zgaruvchini o'zi to'ldiradi — to'liq HTTPS URL
+      - key: RENDER_EXTERNAL_URL
+        fromService:
+          type: web
+          name: emoji-war
+          property: hostWithScheme
+
+      # Dashboard da qo'shing — sync: false = bu faylda saqlanmaydi
+      - key: YOUTUBE_API_KEY
+        sync: false
+
+      - key: CHANNEL_ID
+        value: UCT24pImU78QB7I8a6gofYyA
+
+      # Dashboard da qo'shing — HECH QACHON bu faylga yozmang
+      - key: STREAM_KEY
+        sync: false
+
+      # 23:00 Toshkent = 18:00 UTC — Amerika + Yevropa prime time
+      - key: STREAM_START_CRON
+        value: "0 23 * * *"
+
+      - key: STREAM_DURATION_HOURS
+        value: "10"
+
+      - key: VIDEO_ID
+        value: ""

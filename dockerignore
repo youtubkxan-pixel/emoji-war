@@ -1,0 +1,26 @@
+# ── Sirlar — image ichiga kirmasin ──────────────────────────
+.env
+.env.*
+*.key
+*.pem
+
+# ── node_modules — Docker ichida npm ci o'rnatadi ───────────
+node_modules/
+
+# ── Git tarixi ───────────────────────────────────────────────
+.git/
+.gitignore
+
+# ── Log fayllar ──────────────────────────────────────────────
+*.log
+npm-debug.log*
+
+# ── Editor va OS fayllar ─────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Docker o'zi ──────────────────────────────────────────────
+Dockerfile
+.dockerignore
